@@ -1,0 +1,18 @@
+{{#extend "stylesheets"}}{{/extend}}
+
+<div id="app">
+    <h1 v-html="result"></h1>
+    <ul class="list-group">
+        {{#each data}}
+        <li class="list-group-item">
+            {{@index}} - <a href="{{url}}">{{name}}</a>
+        </li>
+        {{/each}}
+    </ul>
+</div>
+
+
+{{#extend "scripts"}}
+<script src="/javascripts/vue.js"></script>
+<script src="/javascripts/list.js"></script>
+{{/extend}}

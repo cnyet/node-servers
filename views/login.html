@@ -1,0 +1,30 @@
+{{#extend "stylesheets"}}
+<link rel="stylesheet" href="/stylesheets/login.css"/>
+{{/extend}}
+
+<div class="wrap" id="app">
+    <div class="wrap-cell">
+        <div class="wrap-content">
+            <h2 class="box-head">登 录</h2>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="userName">账号</label>
+                    <input class="form-control" id="userName" name="user" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">密码</label>
+                    <input class="form-control" id="pwd" type="password" name="pwd" autocomplete="off">
+                </div>
+                <div class="form-foot">
+                    <button type="button" id="submitBtn" class="btn btn-success">提交</button>
+                    <button type="reset" class="btn btn-info">重置</button>
+                </div>
+            </form>
+            <div class="form-tips">{{tips}}</div>
+        </div>
+    </div>
+</div>
+
+{{#extend "scripts"}}
+<script src="/javascripts/login.js"></script>
+{{/extend}}
