@@ -9,10 +9,10 @@ $("#submitBtn").click(function () {
         type: "post",
         data: params
     }).done(function (data) {
-        if(data.err == 1){
+        if(data.code == 1){
             window.location.href = "/list";
         }else{
-            $(".form-tips").html("登录失败！");
+            $(".form-tips").html(data.message);
         }
         $("form")[0].reset();
         console.log(data);

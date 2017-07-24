@@ -25,25 +25,25 @@ router.post("/", function (req, res, next) {
     console.error(loginUser);
     loginUser.userInfo(function (error, result) {
         if(error){
-            res.redirect("/error");
-            //res.send({message: "页面错误", error: error});
+            //res.redirect("/error");
+            res.send({message: "页面错误", code: 0});
             return;
         }
         if(result == ""){
-            res.redirect("/error");
-            //res.send({message: "用户不存在", error: error});
+            //res.redirect("/error");
+            res.send({message: "用户不存在", code: 0});
             return;
         }else{
             //判断用户密码是否正确
-            if(result[0].password == password){
+            if(result[0].password == pwd){
                 var user = {"name": name};
                 //保存用户session信息
                 req.session.user = user;
-                res.redirect("/list");
+                res.send({message: "登录成功", code: 1});
+                //res.redirect("/list");
             }else{
-                res.send({message: "密码或用户名错误", error: error});
-                res.redirect("/error");
-                //res.send({message: "密码或用户名错误", error: error});
+                res.send({message: "密码或用户名错误", code: 0});
+                //res.redirect("/error");
             }
         }
 
