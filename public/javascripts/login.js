@@ -5,12 +5,12 @@ $("#submitBtn").click(function () {
     var params = $("form").serialize();
     console.log(params);
     $.ajax({
-        url: "/login/into",
+        url: "/login",
         type: "post",
         data: params
     }).done(function (data) {
         if(data.err == 1){
-            window.location.href = "/";
+            window.location.href = "/list";
         }else{
             $(".form-tips").html("登录失败！");
         }

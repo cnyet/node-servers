@@ -4,6 +4,7 @@
 var express = require("express");
 var router = express.Router();
 var connection = require("../config/mysql");
+var User = require("../models/user");
 
 router.get("/", function (req, res, next) {
     console.log(req.session);
@@ -13,12 +14,41 @@ router.get("/", function (req, res, next) {
     }
     res.render("login", {title: "登录页面", tips: tips});
 });
-router.post("/into", function (req, res, next) {
-    var param = req.body;
-    var name = param.user;
-    var pwd = param.pwd;
-    console.error(param);
-    connection.query("SELECT * FROM `user` WHERE `name` = '"+name+"' AND `password` = '"+pwd+"'", function (error, result, fields) {
+
+router.post("/", function (req, res, next) {
+    var name = req.body.user;
+    var pwd = req.body.pwd;
+    var loginUser = new User({
+        name: name,
+        password: pwd
+    });
+    console.error(loginUser);
+    loginUser.userInfo(function (error, result) {
+        if(error){
+            res.redirect("/error");
+            //res.send({message: "页面错误", error: error});
+            return;
+        }
+        if(result == ""){
+            res.redirect("/error");
+            //res.send({message: "用户不存在", error: error});
+            return;
+        }else{
+            //判断用户密码是否正确
+            if(result[0].password == password){
+                var user = {"name": name};
+                //保存用户session信息
+                req.session.user = user;
+                res.redirect("/list");
+            }else{
+                res.send({message: "密码或用户名错误", error: error});
+                res.redirect("/error");
+                //res.send({message: "密码或用户名错误", error: error});
+            }
+        }
+
+    });
+    /*connection.query("SELECT * FROM `user` WHERE `name` = '"+name+"' AND `password` = '"+pwd+"'", function (error, result, fields) {
         if(error) {
             console.log("insert error", error.message);
             return;
@@ -44,7 +74,7 @@ router.post("/into", function (req, res, next) {
             res.end();
             return;
         }
-    });
+    });*/
 });
 
 module.exports = router;

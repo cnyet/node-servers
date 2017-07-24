@@ -10,6 +10,7 @@ var session = require("express-session");
 var index = require('./routes/index');
 var list = require('./routes/list');
 var login = require("./routes/login");
+var error = require("./routes/error");
 
 var app = express();
 
@@ -59,7 +60,7 @@ app.use(session({
 app.use(function(req,res,next){
   console.log(req.session);
   if (!req.session.user) {
-    if (req.url === '/login' || req.url === '/login/into') {
+    if (req.url === '/login' || req.url === '/error') {
       next();/*请求为登陆或者注册则不需要校验session*/
     } else{
       res.json({result: false, content: '用户权限异常'});
@@ -72,6 +73,7 @@ app.use(function(req,res,next){
 app.use('/', index);
 app.use('/list', list);
 app.use("/login", login);
+app.use("/error", error);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
