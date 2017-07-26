@@ -36,11 +36,22 @@ body{
     margin-top:20px;
 }
 .wrap-content .form-group{
-    margin:10px 0;
+    margin:5px 0;
     height:50px;
+}
+.wrap-content .registe .form-group{
+    margin:0;
+}
+.registe .form-group label{
+    width:80px;
+    padding-right:15px;
+    text-align: right;
 }
 .wrap-content .form-group .form-control{
     height:30px;
+}
+.wrap-content .form-group .form-control.error{
+    border-color: red;
 }
 .form-foot .btn{
     margin:0 10px;
@@ -48,5 +59,8 @@ body{
 .form-tips{
     text-align: center;
     padding:10px;
+    color: red;
+}
+.form-tips a{
     color: red;
 }

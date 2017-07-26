@@ -3,7 +3,6 @@
  */
 var mysql = require("mysql");
 var mysql_conf = require("../config/mysql");
-var DB_NAME = "user";
 
 //创建数据库连接池
 var pool = mysql.createPool(mysql_conf);
@@ -19,7 +18,7 @@ function User(user) {
 }
 
 //用户信息保存
-User.prototype.userSave = function (callback) {
+User.prototype.registe = function (callback) {
     var user = {
         name: this.name,
         password: this.password
@@ -38,15 +37,15 @@ User.prototype.userSave = function (callback) {
 };
 
 //查询用户信息
-User.prototype.userInfo = function (callback) {
+User.prototype.findBy = function (callback) {
     var user = {
         name: this.name,
         password: this.password
     };
 
-    var SELECT_LOGIN = "SELECT * FROM user WHERE name = ? AND password = ?";
+    var SELECT_LOGIN = "SELECT * FROM user WHERE name = ?";
     pool.getConnection(function (error, connection) {
-        connection.query(SELECT_LOGIN, [user.name, user.password], function (error, result) {
+        connection.query(SELECT_LOGIN, [user.name], function (error, result) {
             if(error){
                 console.log("SELECT_LOGIN Error: " + error.message);
                 return;

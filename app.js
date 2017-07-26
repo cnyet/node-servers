@@ -11,6 +11,7 @@ var index = require('./routes/index');
 var list = require('./routes/list');
 var login = require("./routes/login");
 var error = require("./routes/error");
+var registe = require("./routes/registe");
 
 var app = express();
 
@@ -54,16 +55,16 @@ app.use(session({
   rolling: false,
   name: 'H5Session',
   saveUninitialized: true,
-  cookie: {user: "default", maxAge: 60*1000}
+  cookie: {user: "default", maxAge: 30*60*1000}
 }));
 
 app.use(function(req,res,next){
   console.log(req.session);
   if (!req.session.user) {
-    if (req.url === '/login' || req.url === '/error') {
+    if (req.url === '/login' || req.url === '/error' || req.url === '/registe') {
       next();/*请求为登陆或者注册则不需要校验session*/
     } else{
-      res.json({result: false, content: '用户权限异常'});
+      res.redirect("/login");
     }
   } else if (req.session.user) {
     next();
@@ -74,6 +75,7 @@ app.use('/', index);
 app.use('/list', list);
 app.use("/login", login);
 app.use("/error", error);
+app.use("/registe", registe);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

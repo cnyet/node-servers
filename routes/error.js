@@ -6,7 +6,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('error', { title: 'Express', message: "密码或用户名错误"});
+    res.render('error', { title: 'error', msg: "用户权限异常"});
 });
 
 module.exports = router;

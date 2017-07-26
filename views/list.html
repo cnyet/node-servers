@@ -1,14 +1,82 @@
-{{#extend "stylesheets"}}{{/extend}}
+{{#extend "stylesheets"}}
+<link rel="stylesheet" href="/stylesheets/list.css"/>
+{{/extend}}
 
 <div id="app">
-    <h1 v-html="result"></h1>
-    <ul class="list-group">
+    <h1>欢迎你，{{user}}<span class="form-tips"></span></h1>
+    <div class="form-group clearfix">
+        <button type="button" class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#newDlg">新增</button>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>排名</th>
+            <th>国家</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
         {{#each data}}
-        <li class="list-group-item">
-            {{@index}} - <a href="{{url}}">{{name}}</a>
-        </li>
+        <tr>
+            <td>{{id}}</td>
+            <td>
+                <a href="{{url}}">{{name}}</a>
+            </td>
+            <td>{{alexa}}</td>
+            <td>{{country}}</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary" @click="editItem({{id}})">编辑</button>
+                <button type="button" class="btn btn-sm btn-danger" @click="delItem({{id}})">删除</button>
+            </td>
+        </tr>
         {{/each}}
-    </ul>
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="newDlg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">${title}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal form-box" id="formInfo" data-id="">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="name">名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control" id="name" :value="listData.name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="url">url</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="url" class="form-control" id="url" :value="listData.url">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="alexa">排名</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="alexa" class="form-control" id="alexa" :value="listData.alexa">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="country">国家</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="country" class="form-control" id="country" :value="listData.country">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" @click="submitForm">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 

@@ -7,10 +7,9 @@ var connection = require("../config/mysql");
 var User = require("../models/user");
 
 router.get("/", function (req, res, next) {
-    console.log(req.session);
     var tips = "还未登录";
     if (req.session.user) {
-        tips = "你好"+req.session.user;
+        tips = "你好"+req.session.user.name;
     }
     res.render("login", {title: "登录页面", tips: tips});
 });
@@ -23,15 +22,16 @@ router.post("/", function (req, res, next) {
         password: pwd
     });
     console.error(loginUser);
-    loginUser.userInfo(function (error, result) {
+    loginUser.findBy(function (error, result) {
+        console.log(result);
         if(error){
-            //res.redirect("/error");
-            res.send({message: "页面错误", code: 0});
+            res.send({msg: "页面错误", code: 0, data: null});
+            res.end();
             return;
         }
         if(result == ""){
-            //res.redirect("/error");
-            res.send({message: "用户不存在", code: 0});
+            res.send({msg: "用户不存在", code: 0, data: null});
+            res.end();
             return;
         }else{
             //判断用户密码是否正确
@@ -39,12 +39,12 @@ router.post("/", function (req, res, next) {
                 var user = {"name": name};
                 //保存用户session信息
                 req.session.user = user;
-                res.send({message: "登录成功", code: 1});
-                //res.redirect("/list");
+                res.send({msg: "登录成功", code: 1, data: null});
             }else{
-                res.send({message: "密码或用户名错误", code: 0});
-                //res.redirect("/error");
+                res.send({msg: "密码或用户名错误", code: 0, data: null});
             }
+            res.end();
+            return;
         }
 
     });
@@ -75,6 +75,6 @@ router.post("/", function (req, res, next) {
             return;
         }
     });*/
-});
+})
 
 module.exports = router;

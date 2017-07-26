@@ -12,7 +12,7 @@ $("#submitBtn").click(function () {
         if(data.code == 1){
             window.location.href = "/list";
         }else{
-            $(".form-tips").html(data.message);
+            $(".form-tips").html(data.msg);
         }
         $("form")[0].reset();
         console.log(data);
