@@ -1,0 +1,10 @@
+.form-box{
+    padding:10px 30px;
+}
+.form-control.error{
+    border-color: red;
+}
+.form-tips{
+    margin-left:50px;
+    color: red;
+}
