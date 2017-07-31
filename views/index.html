@@ -1,0 +1,11 @@
+{{#extend "stylesheets"}}{{/extend}}
+
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+<ul class="list-group">
+    {{#each data}}
+    <li class="list-group-item">{{name}}</li>
+    {{/each}}
+</ul>
+
+{{#extend "scripts"}}{{/extend}}
