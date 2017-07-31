@@ -1,11 +1,10 @@
 {{#extend "stylesheets"}}{{/extend}}
 
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
-<ul class="list-group">
-    {{#each data}}
-    <li class="list-group-item">{{name}}</li>
-    {{/each}}
-</ul>
+<div class="form-group text-center">
+    <h1>{{title}}</h1>
+    <p>Welcome to {{msg}}</p>
+    <a class="btn btn-link" href="/login">登录</a>
+    <a class="btn btn-link" href="/registe">注册</a>
+</div>
 
 {{#extend "scripts"}}{{/extend}}

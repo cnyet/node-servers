@@ -10,9 +10,8 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>ID</th>
+            <th>_id</th>
             <th>名称</th>
-            <th>排名</th>
             <th>国家</th>
             <th>操作</th>
         </tr>
@@ -20,15 +19,14 @@
         <tbody>
         {{#each data}}
         <tr>
-            <td>{{id}}</td>
+            <td>{{_id}}</td>
             <td>
                 <a href="{{url}}">{{name}}</a>
             </td>
-            <td>{{alexa}}</td>
             <td>{{country}}</td>
             <td>
-                <button type="button" class="btn btn-sm btn-primary" @click="editItem({{id}})">编辑</button>
-                <button type="button" class="btn btn-sm btn-danger" @click="delItem({{id}})">删除</button>
+                <button type="button" class="btn btn-sm btn-primary" @click="editItem($event)">编辑</button>
+                <button type="button" class="btn btn-sm btn-danger" @click="delItem($event)">删除</button>
             </td>
         </tr>
         {{/each}}
@@ -57,12 +55,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="alexa">排名</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="alexa" class="form-control" id="alexa" :value="listData.alexa">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-2 control-label" for="country">国家</label>
                             <div class="col-sm-10">
                                 <input type="text" name="country" class="form-control" id="country" :value="listData.country">
@@ -71,7 +63,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" @click="resetForm">取消</button>
                     <button type="button" class="btn btn-primary" @click="submitForm">保存</button>
                 </div>
             </div>
