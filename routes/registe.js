@@ -13,25 +13,22 @@ router.post("/", function (req, res, next) {
     var name = req.body.user;
     var pwd = req.body.pwd;
     var user = new User({
-        name: name,
-        password: pwd
+        userName: name,
+        password: pwd,
+        age: "20",
+        loginDate: new Date()
     });
     console.error(user);
-    user.registe(function (error, result) {
+    user.save(function (error, result) {
         if(error){
             res.send({msg: "页面错误", code: 0, data: null});
-            res.end();
             return;
         }
         if(result == ""){
             res.send({msg: "注册失败", code: 0, data: null});
-            res.end();
-            return;
         }else{
             console.log(result);
             res.send({code:1, msg:'注册成功', data: null});
-            res.end();
-            return;
         }
     })
 });

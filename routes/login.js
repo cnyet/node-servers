@@ -3,7 +3,6 @@
  */
 var express = require("express");
 var router = express.Router();
-var connection = require("../config/mysql");
 var User = require("../models/user");
 
 router.get("/", function (req, res, next) {
@@ -17,22 +16,15 @@ router.get("/", function (req, res, next) {
 router.post("/", function (req, res, next) {
     var name = req.body.user;
     var pwd = req.body.pwd;
-    var loginUser = new User({
-        name: name,
-        password: pwd
-    });
-    console.error(loginUser);
-    loginUser.findBy(function (error, result) {
-        console.log(result);
+    var param = {userName: name, password: pwd};
+    User.find(param, function (error, result) {
+        console.error(result);
         if(error){
             res.send({msg: "页面错误", code: 0, data: null});
-            res.end();
             return;
         }
         if(result == ""){
             res.send({msg: "用户不存在", code: 0, data: null});
-            res.end();
-            return;
         }else{
             //判断用户密码是否正确
             if(result[0].password == pwd){
@@ -43,38 +35,9 @@ router.post("/", function (req, res, next) {
             }else{
                 res.send({msg: "密码或用户名错误", code: 0, data: null});
             }
-            res.end();
-            return;
         }
 
     });
-    /*connection.query("SELECT * FROM `user` WHERE `name` = '"+name+"' AND `password` = '"+pwd+"'", function (error, result, fields) {
-        if(error) {
-            console.log("insert error", error.message);
-            return;
-        }
-        if(result == ""){
-            res.send({err:0, msg:'失败'});
-            res.end();
-            return;
-        }
-        if(result[0].name != name || result[0].password != pwd) {
-            res.send({err:0, msg:'失败'});
-            res.end();
-            return;
-        } else {
-            //记住密码
-            // if(isRem) {
-            //     res.cookie('islogin', userName, { maxAge: 60000 });
-            // }
-            
-            console.log(result);
-            req.session.user = name;
-            res.send({err:1, msg:'成功'});
-            res.end();
-            return;
-        }
-    });*/
-})
+});
 
 module.exports = router;

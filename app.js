@@ -8,10 +8,10 @@ var hbs = require("hbs");
 var session = require("express-session");
 
 var index = require('./routes/index');
-var list = require('./routes/list');
+var error = require('./routes/error');
 var login = require("./routes/login");
-var error = require("./routes/error");
 var registe = require("./routes/registe");
+var list = require("./routes/list");
 
 var app = express();
 
@@ -48,34 +48,31 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 //app session
 app.use(session({
   secret: "hello world",
   resave: false,
   rolling: false,
-  name: 'H5Session',
+  name: 'default',
   saveUninitialized: true,
-  cookie: {user: "default", maxAge: 30*60*1000}
+  cookie: {maxAge: 20*60*1000}
 }));
 
 app.use(function(req,res,next){
-  console.log(req.session);
-  if (!req.session.user) {
-    if (req.url === '/login' || req.url === '/error' || req.url === '/registe') {
-      next();/*请求为登陆或者注册则不需要校验session*/
-    } else{
-      res.redirect("/login");
-    }
-  } else if (req.session.user) {
-    next();
+  console.error(req.session.user);
+  if (req.session.user || req.url === '/login' || req.url === '/' || req.url === '/error' || req.url === '/registe') {
+      next();
+  } else {
+    res.redirect("/login");
   }
 });
 
 app.use('/', index);
-app.use('/list', list);
 app.use("/login", login);
-app.use("/error", error);
 app.use("/registe", registe);
+app.use("/list", list);
+app.use('/error', error);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

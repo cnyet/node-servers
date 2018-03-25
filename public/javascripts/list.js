@@ -10,13 +10,12 @@ var vm = new Vue({
             id: "",
             name: "",
             url: "",
-            alexa: "",
             country: ""
         }
     },
     methods: {
-        editItem: function (id) {
-            console.log(id);
+        editItem: function (event) {
+            var id = $(event.target).parents("tr").children(":first").text();
             if(!id) return;
             this.title = "编辑";
             document.getElementById("formInfo").setAttribute("data-id", id);
@@ -27,10 +26,9 @@ var vm = new Vue({
                 data: {id: id}
             }).done(function (data) {
                 if(data.code == 1){
-                    this.listData = data.data[0];
+                    this.listData = data.data;
                     document.getElementById("name").value = this.listData.name;
                     document.getElementById("url").value = this.listData.url;
-                    document.getElementById("alexa").value = this.listData.alexa;
                     document.getElementById("country").value = this.listData.country;
                     console.log(this.listData);
                 }
@@ -40,8 +38,8 @@ var vm = new Vue({
                 console.log("complete");
             });
         },
-        delItem: function (id) {
-            console.log(id);
+        delItem: function () {
+            var id = $(event.target).parents("tr").children(":first").text();
             if(confirm("确定要删除吗？")){
                 $.ajax({
                     url: "/list/deleteBy",
@@ -64,7 +62,6 @@ var vm = new Vue({
             var id = document.getElementById("formInfo").getAttribute("data-id");
             param.name = document.getElementById("name").value;
             param.url = document.getElementById("url").value;
-            param.alexa = document.getElementById("alexa").value;
             param.country = document.getElementById("country").value;
             if(param.name == ""){
                 document.getElementById("name").className = "form-control error";
@@ -74,29 +71,51 @@ var vm = new Vue({
                 document.getElementById("url").className = "form-control error";
                 return;
             }
-            if(id){
-                param.id = id;
-            }
-            if(this.listData.name == param.name && this.listData.url == param.url && this.listData.alexa == param.alexa && this.listData.country == param.country){
+            if(this.listData.name == param.name && this.listData.url == param.url && this.listData.country == param.country){
                 $("#newDlg").modal("hide");
                 return ;
             }
-            $.ajax({
-                url: "/list/add",
-                type: "post",
-                data: param
-            }).done(function (data) {
-                if(data.code == 1){
-                    window.location.reload();
-                }
-                document.getElementsByClassName("form-tips")[0].innerHTML = data.msg;
-                $("form")[0].reset();
-                console.log(data);
-            }).fail(function (data) {
-                console.error(data);
-            }).always(function () {
-                console.log("complete");
-            });
+            if(id){
+                param.id = id;
+                $.ajax({
+                    url: "/list/update",
+                    type: "post",
+                    data: param
+                }).done(function (data) {
+                    if(data.code == 1){
+                        window.location.reload();
+                    }
+                    document.getElementsByClassName("form-tips")[0].innerHTML = data.msg;
+                    $("form")[0].reset();
+                    $("#newDlg").modal("hide");
+                    console.log(data);
+                }).fail(function (data) {
+                    console.error(data);
+                }).always(function () {
+                    console.log("complete");
+                });
+            }else{
+                $.ajax({
+                    url: "/list/add",
+                    type: "post",
+                    data: param
+                }).done(function (data) {
+                    if(data.code == 1){
+                        window.location.reload();
+                    }
+                    document.getElementsByClassName("form-tips")[0].innerHTML = data.msg;
+                    $("form")[0].reset();
+                    console.log(data);
+                }).fail(function (data) {
+                    console.error(data);
+                }).always(function () {
+                    console.log("complete");
+                });
+            }
+            
         },
+        resetForm: function () {
+            $("form")[0].reset();
+        }
     }
 });
