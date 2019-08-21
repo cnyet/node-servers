@@ -7,17 +7,17 @@
   },
   "dependencies": {
     "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.3",
+    "cookie-parser": "^1.4.4",
+    "debug": "^2.6.9",
     "ejs": "~2.5.6",
-    "express": "~4.15.2",
-    "express-session": "^1.15.4",
-    "hbs": "^4.0.1",
-    "jquery": "^3.2.1",
-    "mongodb": "^2.2.30",
+    "express": "^4.15.5",
+    "express-session": "^1.15.6",
+    "hbs": "^4.0.3",
+    "jquery": "^3.3.1",
+    "mongodb": "^2.2.36",
     "morgan": "~1.8.1",
-    "mysql": "^2.13.0",
-    "serve-favicon": "~2.4.2",
-    "vue": "^2.4.1"
+    "mysql": "^2.16.0",
+    "serve-favicon": "^2.4.5",
+    "vue": "^2.6.10"
   }
 }
