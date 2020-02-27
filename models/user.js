@@ -6,7 +6,6 @@ var mysql_conf = require("../config/mysql");
 
 //创建数据库连接池
 var pool = mysql.createPool(mysql_conf);
-
 pool.on("connection", function (connection) {
     console.log("pool on");
     connection.query("set session auto_increment_increment=1")
@@ -42,7 +41,6 @@ User.prototype.findBy = function (callback) {
         name: this.name,
         password: this.password
     };
-
     var SELECT_LOGIN = "SELECT * FROM user WHERE name = ?";
     pool.getConnection(function (error, connection) {
         connection.query(SELECT_LOGIN, [user.name], function (error, result) {

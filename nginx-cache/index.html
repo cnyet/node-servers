@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+  <h1>nginx</h1>
+  <p> 返回结果：<span id="text"></span></p>
+  <button id="btn">点击</button>
+
+<script type="text/javascript">
+  document.getElementById('btn').addEventListener('click', function(){
+    fetch('/data').then(function(res){
+      return res.text();
+    }).then(function(text){
+      document.getElementById('text').innerText = text;
+    });
+  })
+</script>
+</body>
+</html>

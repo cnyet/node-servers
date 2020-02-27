@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "body-parser": "~1.17.1",
     "cookie-parser": "^1.4.4",
     "debug": "^2.6.9",
@@ -14,10 +15,12 @@
     "express-session": "^1.15.6",
     "hbs": "^4.0.3",
     "jquery": "^3.3.1",
+    "memory-cache": "^0.2.0",
     "mongodb": "^2.2.36",
     "morgan": "~1.8.1",
-    "mysql": "^2.16.0",
+    "mysql": "^2.18.1",
     "serve-favicon": "^2.4.5",
     "vue": "^2.6.10"
-  }
+  },
+  "devDependencies": {}
 }

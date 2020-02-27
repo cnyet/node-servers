@@ -4,9 +4,9 @@
  */
 
 module.exports = {
-    host: "localhost",
-    port: "3306",
-    user: "root",
-    password: "yate12345",
-    database: "temp"
+  host: "localhost",
+  port: "3306",
+  user: "root",
+  password: "123yate",
+  database: "temp"
 };
