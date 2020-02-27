@@ -17,7 +17,7 @@
     "jquery": "^3.3.1",
     "memory-cache": "^0.2.0",
     "mongodb": "^2.2.36",
-    "morgan": "~1.8.1",
+    "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "serve-favicon": "^2.4.5",
     "vue": "^2.6.10"
