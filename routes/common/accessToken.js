@@ -25,3 +25,27 @@ exports.getUserInfo = function (access_token, openId) {
     });
   });
 }
+
+exports.getBaseToken = function() {
+  return new Promise(function(resolve, reject) {
+    var APPID = config.wx.appId;
+    var SECRET = config.wx.appsecret;
+    var url = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${APPID}&secret=${SECRET}`;
+    utils.handleRequest(url).then(function(res) {
+      resolve(res);
+    }).catch(function (err) {
+      reject(err);
+    });
+  });
+}
+
+exports.getTicket = function(token) {
+  return new Promise(function(resolve, reject) {
+    var url = `https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${token}&type=jsapi`;
+    utils.handleRequest(url).then(function(res) {
+      resolve(res);
+    }).catch(function (err) {
+      reject(err);
+    });
+  });
+}

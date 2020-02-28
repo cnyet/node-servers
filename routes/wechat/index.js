@@ -4,6 +4,7 @@
  */
 var express = require('express');
 var cache = require('memory-cache');
+var createHash = require('create-hash');
 var config = require('./config');
 var utils = require('../../utils');
 var common = require('../common');
@@ -25,6 +26,7 @@ router.get('/redirect', function(req, res, next) {
   var callback = 'http://m.yates.com/api/wechat/getOpenId';
   var authorizeUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APPID}&redirect_uri=${callback}&response_type=code&scope=${SCOPE}&state=STATE#wechat_redirect`;
   cache.put('REDIRECT_URI', REDIRECT_URI);
+  console.log(REDIRECT_URI);
   res.redirect(authorizeUrl);
 });
 
@@ -57,6 +59,44 @@ router.get('/getUserInfo', function(req, res, next) {
       code: 0,
       data: data,
       message: 'ok'
+    });
+  });
+});
+
+router.get('/getBaseToken', function(req, res, next) {
+  var access_token = cache.get('access_token');
+  var openId = cache.get('openId');
+  var expire_time = 1000 * 60 * 60 * 2;
+  // 获取普通access_token
+  common.getBaseToken().then(function(data) {
+    var base_token = data.data.access_token;
+    cache.put('base_token', base_token, expire_time);
+    // 获取ticket
+    common.getTicket(base_token).then(function(response) {
+      console.log(response);
+      var ticket = response.data.ticket;
+      var timestamp = parseInt(new Date().getTime() / 1000).toString();
+      var noncestr = utils.randomStr();
+      cache.put('ticket', ticket, expire_time);
+      var params = {
+        noncestr: noncestr,
+        jsapi_ticket: ticket,
+        timestamp: timestamp,
+        url: 'http://m.yates.com'
+      };
+      var str = utils.combine(params);
+      var sign = createHash('sha1').update(str).digest('hex');
+      console.log('参数', params, sign);
+      res.json({
+        code: 0,
+        data: {
+          appId: config.wx.appId, // 必填，公众号的唯一标识
+          timestamp: params.timestamp, // 必填，生成签名的时间戳
+          nonceStr: params.noncestr, // 必填，生成签名的随机串
+          signature: sign,// 必填，签名,
+        },
+        message: 'ok'
+      });
     });
   });
 });
