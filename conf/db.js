@@ -5,7 +5,7 @@ var mongoose = require("mongoose"),
     DB_URL = "mongodb://localhost:27017/test";
 
 //连接
-mongoose.connect(DB_URL);
+mongoose.connect(DB_URL, {useMongoClient:true});
 
 //连接成功
 mongoose.connection.on("connected", function () {

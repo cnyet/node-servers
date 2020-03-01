@@ -3,7 +3,6 @@
  */
 $("#submitBtn").click(function () {
     var params = $("form").serialize();
-    console.log(params);
     $.ajax({
         url: "/login",
         type: "post",
@@ -15,7 +14,7 @@ $("#submitBtn").click(function () {
             $(".form-tips").html(data.msg);
         }
         $("form")[0].reset();
-        console.log(data);
+        console.log('login', data);
     }).fail(function (data) {
         console.error(data);
     }).always(function () {

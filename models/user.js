@@ -10,5 +10,4 @@ var UserSchema = new Schema({
     age: {type: String},
     longinDate: {type: Date, dafault: Date.now}
 });
-
 module.exports = mongoose.model("user", UserSchema);

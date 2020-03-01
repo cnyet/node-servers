@@ -60,7 +60,6 @@ app.use(session({
 }));
 
 app.use(function(req,res,next){
-  console.error(req.session.user);
   if (req.session.user || req.url === '/login' || req.url === '/' || req.url === '/error' || req.url === '/registe') {
       next();
   } else {

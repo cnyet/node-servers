@@ -18,7 +18,6 @@ router.post("/", function (req, res, next) {
     var pwd = req.body.pwd;
     var param = {userName: name, password: pwd};
     User.find(param, function (error, result) {
-        console.error(result);
         if(error){
             res.send({msg: "页面错误", code: 0, data: null});
             return;
