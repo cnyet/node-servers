@@ -12,6 +12,7 @@ var error = require('./routes/error');
 var login = require("./routes/login");
 var registe = require("./routes/registe");
 var list = require("./routes/list");
+var wechat = require("./routes/wechat");
 
 var app = express();
 
@@ -60,11 +61,12 @@ app.use(session({
 }));
 
 app.use(function(req,res,next){
-  if (req.session.user || req.url === '/login' || req.url === '/' || req.url === '/error' || req.url === '/registe') {
-      next();
-  } else {
-    res.redirect("/login");
-  }
+  // if (req.session.user || req.url === '/login' || req.url === '/' || req.url === '/error' || req.url === '/registe') {
+  //     next();
+  // } else {
+  //   res.redirect("/login");
+  // }
+  next();
 });
 
 app.use('/', index);
@@ -72,6 +74,7 @@ app.use("/login", login);
 app.use("/registe", registe);
 app.use("/list", list);
 app.use('/error', error);
+app.use("/api/wechat", wechat);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

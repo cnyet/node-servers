@@ -15,8 +15,11 @@ router.post("/", function (req, res, next) {
     var user = new User({
         userName: name,
         password: pwd,
-        age: "20",
-        loginDate: new Date()
+        sex: Math.round(Math.random() * 10),
+        province: '',
+        avatar: '',
+        appId: '',
+        loginDate: new Date().toLocaleString()
     });
     console.error(user);
     user.save(function (error, result) {
