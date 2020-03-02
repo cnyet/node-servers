@@ -8,16 +8,19 @@
   "dependencies": {
     "axios": "^0.19.2",
     "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
+    "cookie-parser": "^1.4.4",
     "create-hash": "^1.2.0",
-    "debug": "~2.6.3",
-    "express": "~4.15.2",
-    "express-session": "^1.15.4",
-    "hbs": "~4.0.1",
+    "debug": "^2.6.9",
+    "ejs": "~2.5.6",
+    "express": "^4.15.5",
+    "express-session": "^1.15.6",
+    "hbs": "^4.0.3",
+    "jquery": "^3.3.1",
     "memory-cache": "^0.2.0",
-    "mongodb": "^2.2.30",
-    "mongoose": "^4.11.4",
+    "mongodb": "^2.2.36",
     "morgan": "~1.8.1",
-    "serve-favicon": "~2.4.2"
+    "mysql": "^2.18.1",
+    "serve-favicon": "^2.4.5",
+    "vue": "^2.6.10"
   }
 }

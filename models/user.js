@@ -1,16 +1,57 @@
 /**
- * Created by yate on 2017/7/26.
+ * Created by yate on 2017/7/24.
  */
-var mongoose = require("../conf/db"),
-    Schema = mongoose.Schema;
+var mysql = require("mysql");
+var mysql_conf = require("../config/mysql");
 
-var UserSchema = new Schema({
-    userName: {type: String},
-    password: {type: String},
-    province: {type: String},
-    avatar: {type: String},
-    openId: {type: String},
-    sex: {type: Number},
-    longinDate: {type: String}
+//创建数据库连接池
+var pool = mysql.createPool(mysql_conf);
+pool.on("connection", function (connection) {
+    console.log("pool on");
+    connection.query("set session auto_increment_increment=1")
 });
-module.exports = mongoose.model("user", UserSchema);
+
+function User(user) {
+    this.name = user.name;
+    this.password = user.password;
+}
+
+//用户信息保存
+User.prototype.registe = function (callback) {
+    var user = {
+        name: this.name,
+        password: this.password
+    };
+    var INSERT_USER = "INSERT INTO USER (NAME, PASSWORD) VALUES (?, ?)";
+    pool.getConnection(function (error, connection) {
+        connection.query(INSERT_USER, [user.name, user.password], function (error, result) {
+            if(error){
+                console.log("INSERT_USER Error: " + error.message);
+                return;
+            }
+            connection.release();
+            callback(error, result);
+        })
+    })
+};
+
+//查询用户信息
+User.prototype.findBy = function (callback) {
+    var user = {
+        name: this.name,
+        password: this.password
+    };
+    var SELECT_LOGIN = "SELECT * FROM user WHERE name = ?";
+    pool.getConnection(function (error, connection) {
+        connection.query(SELECT_LOGIN, [user.name], function (error, result) {
+            if(error){
+                console.log("SELECT_LOGIN Error: " + error.message);
+                return;
+            }
+            connection.release();
+            callback(error, result);
+        })
+    })
+};
+
+module.exports = User;

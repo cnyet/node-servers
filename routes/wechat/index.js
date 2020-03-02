@@ -55,22 +55,6 @@ router.get('/getUserInfo', function(req, res, next) {
   var access_token = cache.get('access_token');
   var openId = cache.get('openId');
   common.getUserInfo(access_token, openId).then(function(data) {
-    console.log(data.data.nickname);
-    common.query({userName: data.data.nickname}).then(function(result) {
-      console.log('用户', result);
-      if (result.length == 0) {
-         common.insert({
-           userName: data.data.nickname,
-           openId: data.data.openid,
-           sex: data.data.sex,
-           avatar: data.data.headimgurl,
-           province: data.data.province,
-           loginDate: new Date().toLocaleString()
-         }).then(function(response){
-           console.log('添加', response);
-         });
-      }
-    });
     res.json({
       code: 0,
       data: data,
