@@ -8,11 +8,11 @@ var hbs = require("hbs");
 var session = require("express-session");
 
 var index = require('./routes/index');
-var list = require('./routes/list');
 var login = require("./routes/login");
 var error = require("./routes/error");
 var registe = require("./routes/registe");
 var wechat = require("./routes/wechat");
+var mp = require("./routes/mp");
 
 var app = express();
 
@@ -73,11 +73,11 @@ app.use(function(req,res,next){
 });
 
 app.use('/', index);
-app.use('/list', list);
 app.use("/login", login);
 app.use("/error", error);
 app.use("/registe", registe);
 app.use("/api/wechat", wechat);
+app.use("/api/mp", mp);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
