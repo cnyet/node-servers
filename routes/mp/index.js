@@ -44,7 +44,19 @@ router.post('/login', function(req, res, next) {
     }
   }).catch(err => {
     console.log(err);
-  });;
+  });
+});
+
+router.get('/getAccessToken/:id', function(req, res, next) {
+  console.log('参数', req.params, req.query);
+  var appId = config.mp.appId;
+  var appSecret = config.mp.appSecret;
+  var url = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appId}&secret=${appSecret}`;
+  utils.handleRequest(url).then(response => {
+    res.json(response);
+  }).catch(err => {
+    utils.handleFail(err.code, err.message);
+  });
 });
 
 module.exports = router;

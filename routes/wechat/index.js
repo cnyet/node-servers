@@ -117,4 +117,42 @@ router.get('/getBaseToken', function(req, res, next) {
   });
 });
 
+router.get('/jsonp', function(req, res, next) {
+  var _callback = req.query.callback;
+  console.log(_callback);
+  var data = {
+    code: 0,
+    data: 'hello'
+  };
+  // res.type('text/javascript');
+  var str =  _callback + '(' + JSON.stringify(data) + ')';
+  res.end(str);
+});
+
+router.get('/cors/a', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8081');
+  res.header('Access-Control-Allow-Header', 'X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Methods', 'POST,GET,HEAD');
+  res.header('Content-Type', 'text/plain;charset=utf-8');
+  res.json({
+    code: 0,
+    data: 'success',
+    messages: 'ok'
+  });
+});
+
+router.patch('/cors/b', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8081');
+  res.header('Access-Control-Allow-Header', 'X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Methods', 'PUT,PATCH,DELETE,OPTIONS');
+  res.header('Content-Type', 'application/json;charset=utf-8');
+  res.json({
+    code: 0,
+    data: 'success',
+    messages: 'ok'
+  });
+});
+
 module.exports = router;
