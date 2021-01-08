@@ -1,0 +1,15 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.contianer {
+  
+}
+
+.btn{
+  margin-right: 10px;
+}
+.btn:last-child{
+  margin-right: 0;
+}

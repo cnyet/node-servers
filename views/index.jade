@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  
+  .contianer
+    table.table.table-striped
+      caption
+        button.btn.btn-primary(type="button", data-toggle="modal" data-target="#exampleModal", onclick="addHandle()") 添加
+      thead
+        tr
+          th ID
+          th 名称
+          th 备注
+          th 操作
+      tbody
+        each item in list.data
+          tr
+            td #{item.id}
+            td #{item.name}
+            td #{item.remark}
+            td
+              button.btn.btn-info(type="button", onclick="updateHandle("+ JSON.stringify(item) +")") 修改
+              button.btn.btn-danger(type="button", onclick="deleteHandle("+ JSON.stringify(item.id) +")") 删除
+
+  #exampleModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel")
+    .modal-dialog(role="document")
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-label="close")
+            span(aria-hidden="true") &times;
+          h4#exampleModalLabel.modal-title 添加列表数据
+        .modal-body
+          form
+            .form-group
+              label.control-label(for="recipient-name") 字段名:
+              input#recipient-name.form-control(type="text", name="name")
+            .form-group
+              label.control-label(for="message-text") 备注:
+              textarea#message-text.form-control(name="remark", cols="30", rows="5")
+            .form-group
+              input#message-id.form-control(type="hidden", name="status")
+        .modal-footer
+          button.btn.btn-default(type="button", data-dismiss="modal") 取消
+          button.btn.btn-success(type="button", onclick="clickHandle()") 保存
+
+  script(src="/javascripts/modules/home.js")
